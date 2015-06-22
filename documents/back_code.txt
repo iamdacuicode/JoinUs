@@ -1,0 +1,8 @@
+//index.php备份代码
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Welcome you come to LampRookie Blog管理中心</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<?= Html::cssFile('@web/admin/css/common.css')?>
+<?= Html::cssFile('@web/admin/css/main.css')?>
+</head>

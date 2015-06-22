@@ -1,0 +1,138 @@
+<?php
+/**
+ * 登录页面以及登录验证
+ * @authon jack.achan
+ */
+namespace app\modules\blogadmin\controllers;
+
+use yii\web\Controller;
+
+use Yii;
+
+class LoginController extends Controller
+{    
+    public function actionIndex()
+    {
+        //\Yii::$app = $this;
+//        $sql = "select * from {{admin_user}}";
+//        $data = $this->db->createCommand($sql)->queryAll();
+//        if(!isset($this->session['m_user']))
+//        {
+//                $this->redirect("/blogadmin");
+//        }
+		//return "index";
+        return $this->render('index');
+
+    }
+    public function actionTest()
+    {
+      // will just print "test" to the browser
+      return 'test';
+    }
+    /**
+     * username 用户名
+     * password 密码
+     * captcha  验证码
+     */
+    function actionauthLogin()
+    {
+        $username = !empty($_POST['username'])?trim($_POST['username']):"";
+        $password = !empty($_POST['password'])?trim($_POST['password']):null;
+        $captcha = !empty($_POST['captcha'])?strtolower($_POST['captcha']):null;
+        //获取Yii验证码
+        $cap = $this->createAction('captcha')->getVerifyCode();
+        if($username == null){
+                echo " 用户名不允许为空 ";
+        }elseif($username!="cheng"){
+                echo " 用户名不正确 " ;
+        }
+        if($password == null){
+                echo " 密码不能为空";
+        }elseif($password != 123){
+                echo " 密码不正确 ";
+        }
+        if($captcha == null){
+                echo " 验证码不允许为空 ";
+        }elseif($captcha != $cap){
+                echo " 验证码不正确，请重新输入 ";
+        }
+        Yii::app()->session['m_user'] = $username;
+        Yii::app()->session['m_logintime'] = time();
+    }
+    /**
+     * 调用验证码类
+     */
+    public function actions()
+    {
+        return array(
+                'captcha'=>array(
+                        'class'=>'system.web.widgets.captcha.CCaptchaAction',
+                        'width'=>'90',
+                        'height'=>'35',
+                        'maxLength'=>'4',
+                        'minLength'=>'4',
+                        'padding' =>'-1',
+                        'offset' =>'3',
+                        ),
+                );
+    }
+    /**
+     * 登录首页
+     */
+    public function actionLogin()
+    {
+            $loginForm = new LoginForm();
+            $this->render('login',array('loginForm'=>$loginForm));
+    }
+
+    /**
+     * 框架管理
+     */
+    public function actionLeft()
+    {
+            $this->render('left');
+    }
+    /**
+     * 
+     */
+    public function actionTop()
+    {
+            $this->render('top');
+    }
+
+    public function actionCentre()
+    {
+            $this->render('centre');
+    }
+
+    public function actionBottom()
+    {
+            $this->render('bottom');
+    }
+
+    public function actionRepasswd()
+    {
+            $this->render('repasswd');
+    }
+
+    public function actionPwdsave()
+    {
+        $newPass = !empty($_POST['newPass'])?$_POST['newPass']:null;
+        if($newPass!=null)
+        {
+            echo "修改密码成功！";
+        }
+                //$this->render('pwdsave');
+                //$data = admin_user->model()->fun();
+                //$res = Yii::app()->db->createCommand("select * from qi_cell order by id desc limit 1")->queryRow();  
+    }
+
+
+    public function actionLogout(){
+            Yii::app()->user->logout();
+            $this->redirect('blogadmin');
+    }
+}
+    
+    
+ 

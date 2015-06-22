@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="/css/skin.css" rel="stylesheet" type="text/css" />
+<link rel="/stylesheet" href="/js/jquery/css/jquery.ui.all.css">
+<script src="/js/jquery/jquery-1.8.2.js"></script>
+<script src="/js/jquery/jquery.bgiframe-2.1.2.js"></script>
+<script src="/js/jquery/ui/jquery.ui.core.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.widget.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.mouse.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.button.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.draggable.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.position.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.resizable.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.dialog.min.js"></script>
+<script src="/js/jquery/ui/jquery.ui.datepicker.min.js"></script>
+<script src="/js/jquery/ui/i18n/jquery.ui.datepicker-zh-CN.min.js"></script>
+<script src="/js/formvalidator.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/js/jquery/flot/excanvas.min.js"></script><![endif]-->
+<script src="/js/jquery/flot/jquery.flot.js"></script>
+<script src="/js/jquery/flot/jquery.flot.time.js"></script>
+<style>
+select{height:20px; width:100px}
+input.text {height:20px;width:100px }
+fieldset { padding:0; border:0; margin-top:15px; }
+h1 { font-size: 1.2em; margin: .6em 0; }
+div#users-contain {width:100%;}
+div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+.ui-dialog .ui-state-error { padding: .3em; }
+.validateTips { border: 1px solid transparent; padding: 0.3em; }
+#divPageNav .curr{color:#d2d2d2;font-size:15px;}
+#divPageNav A{color:#555555;font-size:15px;}
+</style>
+</head>
+<script>
+$.ajaxSetup({cache:false});
+var reportPicOptions = {
+        lines: { show: true },
+        points: { show: true },
+        grid: { hoverable: true, clickable: true },
+        xaxis: {labelWidth:50,mode:"time",minTickSize:[1, "day"],timeformat: "%y/%m/%d",color:"black"},
+        yaxis:{ticks:1,tickDecimals:0}
+    	};
+    /** 
+    * 时间对象的格式化 
+    */  
+    Date.prototype.format = function(format)  
+    {  
+    /* 
+    * format="yyyy-MM-dd hh:mm:ss"; 
+    */  
+    var o = {  
+    "M+" : this.getMonth() + 1,  
+    "d+" : this.getDate(),  
+    "h+" : this.getHours(),  
+    "m+" : this.getMinutes(),  
+    "s+" : this.getSeconds(),  
+    "q+" : Math.floor((this.getMonth() + 3) / 3),  
+    "S" : this.getMilliseconds()  
+    }  
+      
+    if (/(y+)/.test(format))  
+    {  
+    format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4  
+    - RegExp.$1.length));  
+    }  
+      
+    for (var k in o)  
+    {  
+    if (new RegExp("(" + k + ")").test(format))  
+    {  
+    format = format.replace(RegExp.$1, RegExp.$1.length == 1  
+    ? o[k]  
+    : ("00" + o[k]).substr(("" + o[k]).length));  
+    }  
+    }  
+    return format;  
+    }  
+</script>
+
+
+<body>
+
+<script>
+$(function() {
+		$( "input[type=submit], a, button" )
+			.button()
+			.click(function(event) {
+			    var bid = $(event.target)[0].id;
+				//alert(bid);
+			    $("#ui-id-1").html("创建用户");
+			    $("#name").val("");
+
+			    if(bid=="createUser")
+			    {
+			        $("#selMenus")[0].disabled=false;
+			        $("#name")[0].disabled=false;
+			    	$.get("test.php?act=admin&op=ajaxGetRoles",function(data)
+			    	{
+			    	    //alert(data);
+			    	    var json = eval("("+data+")");
+			    	    $("#selMenus").html("<option value='0'>选择</option>");
+			    	    for(i=0;i<json.length;i++)
+			    	    {
+			    	        if(json[i].isSel==1)
+			    	        {
+			    	        	$("#selMenus").append("<option value='"+json[i].id+"' selected>"+json[i].name+"</option>");
+			    	        }
+			    	        else
+			    	        {
+			    	        	$("#selMenus").append("<option value='"+json[i].id+"'>"+json[i].name+"</option>");
+			    	        }	
+			    	    }
+			    	    $("#dialog-form").dialog("open");
+			    	});
+			    }
+			    else if(bid.indexOf("editUser")!=-1)
+			    {
+			        //alert("mmmm");
+			        var id = bid.replace("editUser","");
+			        $("#editId").val(id);
+			        $("#ui-id-1").html("编辑用户");
+			        $("#name").val($("#tdName"+id).html());
+			        $("#pass").val("");
+			        var roleId = $("#hidRoleId"+id).val();
+			    	$.get("?act=admin&op=ajaxGetRoles&id="+roleId,function(data)
+			    	{
+			    	    //alert(data);
+			    	    $("#selMenus").html("");
+			    	    var json = eval("("+data+")");
+			    	    for(i=0;i<json.length;i++)
+			    	    {
+			    	        if(json[i].isSel=="1")
+			    	        {
+			    	        	$("#selMenus").append("<option value='"+json[i].id+"' selected>"+json[i].name+"</option>");
+			    	        }
+			    	        else
+			    	        {
+			    	        	$("#selMenus").append("<option value='"+json[i].id+"'>"+json[i].name+"</option>");
+			    	        }
+			    	    }
+			    	    if(id==1)
+			        	{
+			           		$("#selMenus")[0].disabled=true;
+			           		$("#name")[0].disabled=true;
+			       	 	}
+			       	 	else
+			       	 	{
+			           		$("#selMenus")[0].disabled=false;
+			           		$("#name")[0].disabled=false;
+			       	 	}
+			       	 	$("#selMenus").change();
+			    	    $("#dialog-form").dialog("open");
+			    	});
+			    }
+			    else if(bid.indexOf("delUser")!=-1)
+			    {
+			        //alert("mmmm");
+			        if(confirm("确认删除吗？"))
+			        {
+						var id = bid.replace("delUser","");
+			    		$.get("test.php?act=admin&op=ajaxDelAdmin&id="+id,function(data)
+			    		{
+			    	    	var json = eval("("+data+")");
+			    	    	if(json.st=="ok")
+			    	    	{
+			    	    	    alert(json.msg);
+			    	    	    window.location=window.location;
+			    	    	}
+			    	    	else if(json.st=="err")
+			    	    	{
+			    	    	    alert(json.msg);
+			    	    	}
+			    		});
+			        }
+			    }
+			    else if(bid.indexOf("banUser")!=-1)
+			    {
+			        var ban = 0;
+			        if($(event.target)[0].innerHTML.indexOf("停用")!=-1)
+			        {
+			             if(!confirm("确认停用吗？"))
+			             {
+			                return;
+			             }
+			             ban = 1;
+			        }
+			        if($(event.target)[0].innerHTML.indexOf("启用")!=-1)
+			        {
+			             if(!confirm("确认启用吗？"))
+			             {
+			                return;
+			             }
+			             ban = 0;
+			        }
+                    var id = bid.replace("banUser","");
+			    	$.get("test.php?act=admin&op=ajaxBanAdmin&id="+id+"&ban="+ban,function(data)
+			    	{
+			    	    var json = eval("("+data+")");
+			    	    if(json.st=="ok")
+			    	    {
+			    	    	alert(json.msg);
+			    	    	window.location=window.location;
+			    	    }
+			    	    else if(json.st=="err")
+			    	    {
+			    	    	alert(json.msg);
+			    	    }
+			    	});
+			      
+			    }
+		});
+		$( "#dialog-form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 380,
+			modal: true,
+			buttons: {
+				"保存": function() {
+					var bValid = true;
+                    if($("#name").val()=="")
+                    {
+                       $("#td_msg_name").html("帐号为必填项");
+                       bValid = false;
+                    }
+                    if($("#pass").val()=="")
+                    {
+                       $("#td_msg_pass").html("密码为必填项");
+                       bValid = false;
+                    }
+                    var rolRelId = 0;
+                    var rolRelName = "";
+                    if($("#selMenus").val()=="3")
+                    {
+                        if($("#selMaker").val()=="0")
+                        {
+                            $("#td_msg_maker").html("厂商为必选项");
+                            bValid = false;
+                        }
+                        rolRelId = $("#selMaker").val();
+                        rolRelName = $("#selMaker").find("option:selected").text();
+                    }
+                    else
+                    if($("#selMenus").val()=="4")
+                    {
+                        if($("#selMedia").val()=="0")
+                        {
+                            $("#td_msg_media").html("媒体为必选项");
+                            bValid = false;
+                        }
+                        rolRelId = $("#selMedia").val();
+                        rolRelName = $("#selMedia").find("option:selected").text();
+                    }
+					if(bValid ){
+					    var obj = $(this);
+					    var roleName = $("#selMenus").find("option:selected").text()
+						$.post("test.php?act=admin&op=ajaxSaveUser&id="+$("#editId").val(),{name:$("#name").val(),roleId:$("#selMenus").val(),roleName:roleName,pass:$("#pass").val(),roleRelId:rolRelId,roleRelName:rolRelName},function(data)
+						{
+						    var json = eval("("+data+")");
+						    if(json.st=="ok")
+						    {
+								alert("保存成功");
+								obj.dialog( "close" );
+								window.location=window.location;
+							}
+							else if(json.st=="err1")
+							{
+								alert("保存失败：已经存在");
+							}
+							else if(json.st=="err2")
+							{
+								alert("保存失败：用户不能为空");
+							}
+						}); 
+					}
+				},
+				"取消": function() {
+					$(this).dialog( "close" );
+				}
+			},
+			close: function() {
+				
+			}
+		});
+		$("#selMenus").change(function(){
+		   if($(this).val()=="3")
+		   {
+				$.get("test.php?act=game&op=ajaxGetMakers",function(data)
+			    	{
+			    	    //alert(data);
+			    	    var json = eval("("+data+")");
+			    	     $("#selMaker").html("<option value='0'>选择</option>");
+			    	    for(i=0;i<json.length;i++)
+			    	    {
+			    	        $("#selMaker").append("<option value='"+json[i].id+"'>"+json[i].name+"</option>");
+			    	    }
+			    });
+		       $("#trFormMaker").show();
+		       $("#trFormMedia").hide();
+		   }
+		   else if($(this).val()=="4")
+		   {
+				$.get("test.php?act=media&op=ajaxGetMedias",function(data)
+				{
+			 		//alert(data);
+			  		var json = eval("("+data+")");
+			  		$("#selMedia").html("<option value='0'>选择</option>");
+			  		for(i=0;i<json.length;i++)
+			  		{
+			      		$("#selMedia").append("<option value='"+json[i].id+"'>"+json[i].name+"</option>");
+			  		}
+			  		//$("#selMedia").append("<option value='-1'>其他</option>");
+				});
+		   	   $("#trFormMedia").show();
+		   	   $("#trFormMaker").hide();
+		   }
+		   else
+		   {
+		   	   $("#trFormMedia").hide();
+		   	   $("#trFormMaker").hide();
+		   }
+		   
+		});
+});
+</script>
+
+<div id="dialog-form" title="创建用户">
+	<form>
+		<fieldset>
+       <table >
+      <tr>
+		<td height="40px">帐号：</td>
+		<td>
+			<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" style="width:200px;"/>
+		</td>
+		<td id="td_msg_name" class="msg_txt"></td>
+	  </tr>
+       <tr>
+			<td height="40px">密码：</td>
+			<td>
+			<input type="text" name="pass" id="pass" class="text ui-widget-content ui-corner-all" style="width:200px;"/>
+			</td><td id="td_msg_pass" class="msg_txt"></td>
+		</tr>
+		<tr>
+			<td height="40px">角色：</td>
+		   <td>
+				<select name="selMenus" id="selMenus" class="text ui-widget-content ui-corner-all" style="width:200px;height:25px;">
+				</select>
+			</td>
+			<td class="msg_txt"></td>
+		</tr>
+		<tr style="display:none;" id="trFormMedia">
+			<td >媒体：</td>
+			<td>
+				<select name="selMedia" id="selMedia" class="text ui-widget-content ui-corner-all" style="width:200px;height:25px;">
+				</select>
+			</td><td class="msg_txt" id="td_msg_media"></td>
+		</tr>
+		<tr style="display:none;" id="trFormMaker"><td >厂商：</td>
+		   <td>
+					<select name="selMaker" id="selMaker" class="text ui-widget-content ui-corner-all" style="width:200px;height:25px;">
+					</select>
+			</td>
+			<td class="msg_txt" id="td_msg_maker"></td>
+		</tr>
+       </table>
+</fieldset>
+	<input type="hidden" id="editId" value=""/>
+	</form>
+</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="17" height="29" valign="top" background="/images/mail_leftbg.gif"><img src="/images/left-top-right.gif" width="17" height="29" /></td>
+    <td height="29" valign="top" background="/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">用户管理</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="/images/mail_rightbg.gif"><img src="/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr>
+  <tr>
+    <td height="71" valign="middle" background="/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9"><table width="100%" height="138" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="13" valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="left_txt">当前位置：用户管理</td>
+          </tr>
+          <tr>
+            <td height="20"><table width="100%" height="1" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+              <tr>
+                <td></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td><table width="100%" height="55" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="10%" height="55" valign="middle"><img src="/images/title.gif" width="54" height="55"></td>
+                <td width="90%" valign="top"><span class="left_txt2">在这里，您可以创建或删除后台用户用户</span>
+                <br/><button id="createUser">创建用户</button></td>
+              </tr>
+            </table></td>
+          </tr>
+		  <tr>
+            <td height="20"><table width="100%" height="1" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+              <tr><td></td></tr></table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <div id="users-contain" class="ui-widget">
+	<h1>用户列表:</h1>
+	<table id="users" class="ui-widget ui-widget-content">
+		<thead>
+			<tr class="ui-widget-header ">
+				<th width="60px">编号</th>
+				<th width="130px">帐号</th>
+				<th width="180px">角色</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+                            <tr>
+              <td>1</td>
+              <td id="tdName1">admin</td>
+              <td id="tdRole1">超级用户</td>
+              <td><!--<button id="editUser1">编辑</button>&nbsp;&nbsp;&nbsp;&nbsp;--><button id="banUser1">停用</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="delUser1">删除</button></td>
+              </tr>
+              <input type="hidden" id="hidRoleId1" value="1"/>
+              <input type="hidden" id="hidRoleRelId1" value="0"/>
+			  <tr>
+				  <td>2</td>
+				  <td id="tdName4">test</td>
+				  <td id="tdRole4">选择</td>
+				  <td>
+						<button id="banUser4">启用</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="delUser4">删除</button>
+				  </td>
+				</tr>
+				 <input type="hidden" id="hidRoleId4" value="0"/>
+				 <input type="hidden" id="hidRoleRelId4" value="0"/>
+             </tbody>
+	</table>
+</div>
+ </td>
+          </tr>
+        </table>
+          </td>
+      </tr>
+    </table></td>
+    <td background="/images/mail_rightbg.gif">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="middle" background="/images/mail_leftbg.gif"><img src="/images/buttom_left2.gif" width="17" height="17" /></td>
+      <td height="17" valign="top" background="/images/buttom_bgs.gif"><img src="/images/buttom_bgs.gif" width="17" height="17" /></td>
+    <td background="/images/mail_rightbg.gif"><img src="/images/buttom_right2.gif" width="16" height="17" /></td>
+  </tr>
+</table>
+</body>
