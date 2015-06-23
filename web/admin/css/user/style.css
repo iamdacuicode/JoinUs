@@ -1,0 +1,234 @@
+/*
+===================
+浏览器重置
+===================
+*/
+body { color: #4D4D4D; height: 100%; font-family: "Microsoft Yahei","冬青黑体简体中文 w3"; font-size:12px; background-color:#ffffff }
+a, a:hover { text-decoration: none }
+a { color: #2D6DA2 }
+a:hover { color: #F60 }
+ul, li { list-style: none }
+h3 { font-size: 14px; font-weight: bold; }
+/*
+===================
+页面框架样式
+===================
+*/
+#head{position:absolute;left:0;}
+#nav,#main_right{ position:absolute; left:0;}
+#head{width:100%;}
+#switchPoint{background:url(../images/show_all.png) no-repeat; display:block; height:22px; width:30px; position:absolute; top:15px; left:10px; cursor:pointer; text-indent:-999em;}
+#nav,#main_right{top:50px;bottom:0px;_height:100%;overflow:auto;}
+#head{top:0;height:49px; background:url(../images/ui-top-bg.jpg) repeat-x; border-bottom: 1px solid #28384f;}
+#nav{width:180px; padding-top: 10px; padding-bottom: 10px; overflow-y: auto; overflow-x: hidden; background-color: #eef1f8; border-right: 1px solid #c1d1dc;}
+#main_right{ position:absolute; right: 0; left:184px;}
+#head #logo { float: left; border-right: 1px solid #28384f; height: 50px; font-size: 24px; line-height: 50px; color: #FFF; width: 120px; padding-left:60px;}
+#head { color: #f7f8fa; }
+#head #lang_tab, #head #tool { height: 22px; line-height: 22px; margin-top: 14px; }
+#head #tool a, #head .menu { color: #f7f8fa; }
+#head #tool a:hover, #head .menu:hover { color: #E8EBF0; }
+#head #lang_tab { padding-right: 20px; float: right; }
+#head .menu { background-image: url(../images/page_top_line.gif); background-repeat: no-repeat; background-position: right center; padding-right: 15px; }
+#head #tool { float: right; padding-right: 20px; }
+#page_nav { line-height: 30px; background-color: #f8f9fc; height: 30px; padding-right: 10px; padding-left: 10px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #dbe7ef; }
+#runtime { height: 30px; line-height: 30px; text-align: center; margin-left: 15px; margin-right: 15px; color: #CCC; }
+#main { width:100%; height:100%; overflow: auto; overflow-x: hidden; border: none; }
+.top_nav { float: left; white-space: nowrap; padding-top: 8px; padding-left: 5px; }
+.top_nav ul { }
+.top_nav ul li { float: left; line-height: 35px; height: 35px; font-size: 14px; }
+.top_nav ul li a { display: block; padding-left:20px; padding-right:20px; color: #f7f8fa; }
+.index_tip { line-height: 25px; height: 25px; border-top: 1px dashed #ccc; margin-top: 10px; padding-top: 5px; }
+/*
+===================
+常用功能样式
+===================
+*/
+
+/*
+===================
+主导航样式
+===================
+*/
+
+
+/*
+===================
+功能菜单样式
+===================
+*/
+.page_function { border-top: 1px solid #ffffff; background-color: #f7f8fa; padding-top: 10px;  border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ddd;  padding-bottom: 10px; }
+.page_function .info { height: 30px; padding-left: 20px; padding-right: 20px;}
+.page_function .info h3 { font-size: 20px; float: left; margin: 0; padding: 0; padding-right: 10px; font-weight: bold }
+.page_function .info h3 a{ color: #4D4D4D; }
+.page_function .info small { margin: 0; padding: 0; float: left; padding-top: 8px; color: #999; font-size: 12px; }
+.page_function .tip {padding-left: 20px; padding-right: 20px; font-size: 12px; line-height: 25px; height: 25px; padding-top: 5px; color: #666 ; }
+.page_function .exercise {padding-left: 20px; padding-right: 20px; height: 27px; padding-top: 10px;}
+.page_function .exercise a { line-height: 25px; height: 25px; padding-left: 20px; padding-right: 20px; background-image: url(../images/button.png); background-repeat: repeat-x; border: 1px solid #4288d0; display: block; float: left; color: #FFF; margin-right: 10px; }
+.page_function .exercise a:hover { background-position: 0px -30px; }
+.page_menu { border: 1px solid #DBE7EF; background-color: #f7f8fa; line-height: 35px; margin-bottom: 5px; padding:5px;}
+/*
+===================
+表格样式
+===================
+*/
+.page_main { padding: 20px; padding-top: 10px; }
+.page_main h3 { line-height: 35px;border-bottom: 1px solid #eee; text-shadow:0 1px 1px #ffffff; color: #2D6DA2; padding-bottom:5px; padding-top:5px;} 
+.page_table { margin-top:10px; }
+.page_table table { table-layout: fixed;  }
+.page_table table tr {}
+.page_table table td { padding:2px 10px; background-image:url("../images/table_bg.jpg"); background-repeat:repeat-x; background-position:bottom left; height:35px; line-height:35px;}
+.page_table tr:hover { background-color:#fafafa}
+.table_list { }
+.table_list table {}
+.table_list th { padding: 10px; background-color: #fafafa; border-top: 1px solid #eee; background-image: url("../images/table_bg.jpg"); background-repeat: repeat-x; background-position: bottom left; color: #666666; font-weight: bold }
+.table_list .odd { background-color:#fafafa}
+.table_list td {height:25px ;}
+.table_list td a { }
+.table_list td a:hover {  }
+.page_table.table_list .tableborder tr.header{
+	padding: 10px;
+	background-color: #fafafa;
+	border-top: 1px solid #eee;
+	background-image: url("../images/table_bg.jpg");
+	background-repeat: repeat-x;
+	background-position: bottom left;
+	color: #666666;
+	font-weight: bold; font-size: 12px;
+}
+.page_table.table_list .tableborder tr.header td{line-height: 35px; height: 35px;}
+.page_table.table_list .tableborder tr.header1 td table td,.page_table.table_list .tableborder tr.header1 td{padding: 0px 10px;background-image: none; font-size: 12px; line-height: 35px; height: 35px;}
+.page_table.table_list .tableborder tr.header td a,.page_table.table_list .tableborder tr.header td a u{ color: #666666; text-decoration: none;}
+.page_table.table_list .tableborder tr td{font-size: 12px;}
+.page_table.table_list .tableborder #news1 td img{margin-top: -10px;}
+
+.page_table.table_list .tableborder tr.caoz td{line-height: 35px; height: 35px; background-image:none;}
+.page_table.table_list .tableborder tr.caoz.page td{background-image: url("../images/table_bg.jpg");}
+.page_table.table_list .tableborder tr.caoz td table td{ padding:0; }
+.page_table.table_list .tableborder tr.caoz.page td table td{background-image:none;}
+/*
+===================
+上传样式
+===================
+*/
+
+/*
+===================
+操作菜单与分页样式
+===================
+*/
+.page_menu { border: 1px solid #DBE7EF; background-color: #f7f8fa; line-height: 35px; margin-bottom: 5px; padding:5px;}
+/*
+===================
+表单样式
+===================
+*/
+.dynamic-tab-pane-control .tab-page { margin-top:10px; }
+.dynamic-tab-pane-control .tab-page table { table-layout: fixed;  }
+.dynamic-tab-pane-control .tab-page table tr {}
+.dynamic-tab-pane-control .tab-page table tr.header,.dynamic-tab-pane-control .tab-page table tr td.header { display: none;}
+.dynamic-tab-pane-control .tab-page table td { padding:5px 10px 8px; background-image:url("../images/table_bg.jpg"); background-repeat:repeat-x; background-position:bottom left; height:25px;}
+.dynamic-tab-pane-control .tab-page table td table td{ padding:4px 0; background-image:none;
+}
+.dynamic-tab-pane-control .tab-page tr:hover { background-color:#fafafa}
+input,textarea, select { vertical-align: middle; }
+label { padding-right:10px; }
+select { border: 1px solid #cccccc; color: #3E3E3E; padding: 5px;line-height:18px; }
+.dynamic-tab-pane-control .tab-page input { border: 1px solid #cccccc;  background-color:#fff; box-shadow:1px 1px 3px #f0f0f0 inset;  padding: 4px 8px;line-height:18px; margin-right: 5px;
+}
+.dynamic-tab-pane-control .tab-page  textarea { border: 1px solid #cccccc; height: 80px; width: 380px; background-color:#fff; box-shadow:1px 1px 3px #f0f0f0 inset;  padding: 5px;line-height:18px;}
+form{padding-bottom: 20px;}
+/*
+===================
+按钮样式
+===================
+*/
+.button { line-height: 30px; font-size: 14px; height: 30px; padding-left: 20px; padding-right: 20px; background-image: url(../images/button.png); background-repeat: repeat-x; border: 1px solid #4288d0; color: #FFF; display: inline-block; margin-right: 10px; cursor: pointer; vertical-align: middle; }
+.button_ds { background-color:#e9e9e9; background-image:none !important; border:1px solid #b1aeae; color:#999999 !important;text-shadow:0 1px 1px #ffffff;}
+.button:hover { color: #FFF; background-position: 0px -30px; }
+.button_small { line-height: 25px; font-size: 12px; height: 25px; padding-left: 10px; padding-right: 10px; background-image: url(../images/button_small.png); background-repeat: repeat-x; border: 1px solid #cccccc; color: #666; display: inline-block; margin-right: 10px; cursor: pointer; vertical-align: middle; }
+.button_small:hover { color: #333; background-position: 0px -10px; }
+/*
+===================
+日历组件
+===================
+*/
+
+/*
+===================
+TAB组件
+===================
+*/
+table.dynamic-tab-pane-control_ tr td{ padding:0; text-align:center;}
+table.dynamic-tab-pane-control_ tr td a{
+	display: block; float: left; padding-left: 20px; padding-right: 20px; height: 32px; line-height: 32px;  color:#333; font-size:12px; background:none;
+}
+.dynamic-tab-pane-control_ tr td a.header{ border-bottom:2px solid #069 !important; color:#006699 !important; font-weight:bold;}
+table.dynamic-tab-pane-control_ tr:hover { background:none;}
+
+.dynamic-tab-pane-control.tab-pane .tab-row{
+padding-top: 10px; height: 35px; line-height: 35px;  margin-left: 15px; margin-right: 15px; margin-top: 10px; background-image:url("../images/table_bg.jpg"); background-repeat:repeat-x; background-position:bottom left;
+}
+
+.dynamic-tab-pane-control .tab-row .tab a{
+	display: block; float: left; padding-left: 20px; padding-right: 20px; height: 32px; line-height: 32px;  color:#333; font-size:12px; }
+.dynamic-tab-pane-control .tab-row .tab a:hover { border-bottom:2px solid #ccc;}
+.dynamic-tab-pane-control .tab-row .tab.selected a{
+border-bottom:2px solid #069 !important; color:#006699 !important; font-weight:bold;
+}
+
+.dynamic-tab-pane-control .tab-page {
+padding: 15px; padding-top: 5px; 
+
+}
+
+
+.dynamic-tab-pane-control .tab-row {
+	z-index:		1;
+	white-space:	nowrap;
+}
+
+.tabcolor {}
+/*
+===================
+表单验证组件
+===================
+*/
+
+/*
+===================
+颜色选择组件
+===================
+*/
+/*
+===================
+其他组件
+===================
+*/
+
+/*
+===================
+TAG录入组件
+===================
+*/
+
+/*
+===================
+浮动框组件
+===================
+*/
+
+/*
+===================
+新闻组件
+===================
+*/
+/*
+===================
+分页样式
+===================
+*/
+.epages{margin:3px 0;font:11px/14px}
+.epages *{vertical-align:middle;}
+.epages a{border:1px solid #D9DDE0; background:#FAFBFD; margin:0 1px 0 0; text-align:center;text-decoration:none; padding:4px 8px;}
+.epages a:hover,.epages b{border:#659B28 1px solid;background:#f3f8ef;text-decoration:none;color:#004c7d;padding:4px 8px;  margin:0 1px 0 0; }
+.epages a:hover b,.epages a b{ border:0; padding:0; margin:0;}
