@@ -10,9 +10,8 @@ use yii\captcha\Captcha;
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">-->
 <?=Html::cssFile('admin/css/login.css') ?>
+<?=Html::cssFile('bootstrap/css/bootstrap.min.css') ?>
 <?=Html::jsFile('admin/js/jQuery-v1.7.2.js') ?>
-<?=Html::jsFile('admin/js/md5/md5_sha.js') ?>
-<?=Html::jsFile('admin/js/md5/base64.js') ?>
 <!--<title>Welcome LampRookie Blog管理后台登录</title>-->
 <script type="text/javascript">
  $(document).ready(function(){
@@ -94,12 +93,15 @@ $(document).ready(function(){
                 </li>
                 <span id="authCaptcha" style="color:red"></span>
                 <li class="li_sub">
-                    <input type="submit" name="sub" id="login_submit" value="登录" onclick="authLogin();" class="input_sub"/>
+                    <input type="submit" name="sub" id="login_submit" value="登   录" onclick="authLogin();" class="input_sub btn btn-info"/>
                 </li>
             </ul>
         </form>
     </div>
         <?php ActiveForm::end(); ?>
+        <?=Html::jsFile('admin/js/md5/md5_sha.js') ?>
+        <?=Html::jsFile('admin/js/md5/base64.js') ?>
         <?= Html::jsFile('admin/js/loginauth.js') ?>
+        <?= Html::jsFile('bootstrap/js/bootstrap.min.js') ?>;
 </body>
 </html>
