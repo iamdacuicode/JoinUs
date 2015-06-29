@@ -57,6 +57,16 @@ $config = [
         'blogadmin' => [
             'class' => 'app\modules\blogadmin\blogadmin',
         ],
+		'api' => [
+
+            'class' => 'app\modules\api\Module',
+
+        ],
+		'service' => [
+
+            'class' => 'app\modules\service\Module',
+
+        ],
     ],
 ];
 
@@ -65,8 +75,8 @@ if (YII_ENV_DEV) {
     //$config['bootstrap'][] = 'debug';
     //$config['modules']['debug'] = 'yii\debug\Module';
 
-    //$config['bootstrap'][] = 'gii';
-    //$config['modules']['gii'] = 'yii\gii\Module';
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = 'yii\gii\Module';
 }
 
 return $config;
